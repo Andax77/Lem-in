@@ -101,6 +101,8 @@ SRC = ./ft_atoi.c \
 	  ./pf_size_secure.c \
 	  ./pf_string.c \
 	  ./pf_uint.c \
+	  ./ft_printf.c \
+	  ./ft_printf2.c \
 
 OBJ = $(SRC:.c=.o)
 DEL = rm -f
