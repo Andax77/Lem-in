@@ -2,13 +2,14 @@ NAME = lem-in
 GREP = grep "Error"
 INC_PATH = includes
 SRC_PATH = src
-SRC_NAME = lem_in.c
+SRC_NAME = lem_in.c\
+			lem_in2.c
+
 OBJ_PATH = obj
 LDFLAGS = -L libft/ -lft
 FLAGS = -I includes -I libft
 CFLAGS = -Wall -Werror -Wextra
 RM = rm -f
-
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))

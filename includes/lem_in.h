@@ -16,16 +16,21 @@
 
 typedef struct s_data
 {
-	int		stat;
-	char	*name;
-	int		x;
-	int		y;
+	int				stat;
+	char			*name;
+	int				x;
+	int				y;
+	struct s_data	*next;
 }				t_data;
 
 typedef struct s_link
 {
-	char	*a;
-	char	*b;
+	char			*a;
+	char			*b;
+	struct s_link	*next;
 }				t_link;
+
+int		is_link(char *str, t_link **link);
+int		is_data(char *str, t_data **data, int stat);
 
 #endif

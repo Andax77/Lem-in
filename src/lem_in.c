@@ -28,16 +28,22 @@ static long		get_long(char *str)
 	return (nbr);
 }
 
-static void		get_data(t_data **data, t_link **link, char *str)
+static void		get_data(t_data **data, t_link **link, char *str, int *stat)
 {
 	if (ft_strcmp(str, "##start") == 0)
-		(*data)->stat = 1;
+		*stat = 1;
 	else if (ft_strcmp(str, "##end") == 0)
-		(*data)->stat = 2;
+		*stat = 2;
 	// else if (str[0] == '#' && str[1] == '#')
-	// else if (!ft_strchr(str, ' ') && is_link(str, link))
-	else if (!ft_strchr(str, '-') && is_data(str, data))
+	else if (str[0] == '#' && str[1] != '#')
 		return ;
+	else if (!ft_strchr(str, ' ') && ft_strchr(str, '-') && is_link(str, link))
+		return ;
+	else if (ft_strchr(str, ' ') && is_data(str, data, *stat))
+		return ;
+	else
+		stat = 0;
+	return ;
 
 }
 
@@ -45,12 +51,24 @@ static long		ft_data(t_data **data, t_link **link, long ant)
 {
 	char		*arg;
 	int			ret;
+	int			stat;
 
 	while ((ret = get_next_line(STDIN_FILENO, &arg)) == 1)
 	{
-		get_data(data, link, arg);
+		// ft_printf("%s\n",arg );
 		ant == 0 ? ant = get_long(arg) : ant;
+		get_data(data, link, arg, &stat);
 		free(arg);
+	}
+	while (*data)
+	{
+		ft_printf("%s %d %d\n", (*data)->name, (*data)->x, (*data)->y);
+		(*data = (*data)->next);
+	}
+	while (*link)
+	{
+		ft_printf("%s-%s\n", (*link)->a, (*link)->b);
+		(*link = (*link)->next);
 	}
 	if (ret == -1)
 		perror("Error\n");
@@ -63,6 +81,8 @@ int			main(int argc, char const *argv[])
 	t_link	*link;
 	long	ant;
 
+	data = NULL;
+	link = NULL;
 	(void)argv;
 	(void)argc;
 	ant = ft_data(&data, &link, 0);
