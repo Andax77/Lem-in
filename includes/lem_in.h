@@ -14,7 +14,7 @@
 # define LEM_IN_H
 # include "../libft/libft.h"
 
-typedef struct s_data
+typedef struct	s_data
 {
 	int				stat;
 	char			*name;
@@ -23,14 +23,17 @@ typedef struct s_data
 	struct s_data	*next;
 }				t_data;
 
-typedef struct s_link
+typedef struct	s_link
 {
 	char			*a;
 	char			*b;
 	struct s_link	*next;
 }				t_link;
 
-int		is_link(char *str, t_link **link);
-int		is_data(char *str, t_data **data, int stat);
+int				is_link(char *str, t_link **link);
+int				is_data(char *str, t_data **data, int *stat);
+void			ft_data_clear(t_data *data, t_link *link);
+long			ft_atol(char *str);
+void			ft_go(t_data *data, t_link *link, long ant);
 
 #endif

@@ -12,66 +12,94 @@
 
 #include "lem_in.h"
 
-int		is_link(char *str, t_link **link)
+static void			is_link2(char *str, t_link **new)
 {
-	int		i;
-	int		a;
-	t_link	*new;
+	int				a;
+	int				i;
 
 	i = 0;
 	a = 0;
-	new = *link;
-	while (new)
-		new = new->next;
-	if (!(new = (t_link*)malloc(sizeof(t_link))))
+	if (!((*new) = (t_link*)malloc(sizeof(t_link))))
 		perror("Malloc error to link-> is_link -> lem_in2.c");
 	while (str[i] != '-')
 		i++;
-	if (!(new->a = (char*)malloc(sizeof(char) * i + 1)))
+	if (!((*new)->a = (char*)malloc(sizeof(char) * i + 1)))
 		perror("Malloc error to new.a -> is_link -> lem_in2.c");
-	new->a = ft_strncpy(new->a, str, i);
+	(*new)->a = ft_strncpy((*new)->a, str, i);
+	(*new)->a[i] = '\0';
 	while (str[i++])
 		a++;
-	if (!(new->b = (char*)malloc(sizeof(char) * a + 1)))
+	if (!((*new)->b = (char*)malloc(sizeof(char) * a + 1)))
 		perror("Malloc error to new.b -> is_link -> lem_in2.c");
-	new->b = ft_strncpy(new->b, str + i - a, a);
-	new->next = NULL;
-	if ((*link) == NULL)
-		(*link) = new;
+	(*new)->b = ft_strncpy((*new)->b, str + i - a, a);
+	(*new)->b[a] = '\0';
+	(*new)->next = NULL;
+}
+
+int					is_link(char *str, t_link **link)
+{
+	t_link			*new;
+	static t_link	*last;
+
+	is_link2(str, &new);
+	if (last == NULL)
+	{
+		*link = new;
+		last = *link;
+	}
 	else
-		(*link)->next = new;
+	{
+		last->next = new;
+		last = new;
+	}
 	return (1);
 }
 
-int		is_data(char *str, t_data **data, int stat)
+static void			is_data2(char *str, t_data **new, int stat)
 {
-	int		i;
-	int		a;
-	t_data	*new;
+	int				i;
+	int				a;
+	char			**ptr;
 
+	i = -1;
 	a = 0;
-	i = 0;
-	new = *data;
-	while (new)
-		new = new->next;
-	if (!(new = (t_data*)malloc(sizeof(t_data))))
+	if (!((*new) = (t_data*)malloc(sizeof(t_data))))
 		perror("Malloc error to data-> is_data -> lem_in2.c");
-	while (str[a + i] != ' ')
+	ptr = ft_strsplit(str, ' ');
+	while (ptr[0][a])
 		a++;
-	if (!(new->name = (char*)malloc(sizeof(char) * a + 1)))
+	if (!((*new)->name = (char*)malloc(sizeof(char) * a + 1)))
 		perror("Malloc error to data.name -> is_data -> lem_in2.c");
-	while (str[i] != ' ')
-		new->name[a++] = str[i++];
-	new->name[a] = '\0';
-	while (ft_isdigit(str[++i]))
-		new->y = new->x * 10 + str[i] - '0';
-	while (ft_isdigit(str[++i]))
-		new->x = new->y * 10 + str[i] - '0';
-	new->stat = !new->stat ? stat : 0;
-	new->next = NULL;
-	if (*data == NULL)
-		(*data) = new;
+	while (ptr[0][++i])
+		(*new)->name[i] = str[i];
+	(*new)->name[i] = '\0';
+	(*new)->y = ft_atoi(ptr[1]);
+	(*new)->x = ft_atoi(ptr[2]);
+	(*new)->stat = !(*new)->stat ? stat : 0;
+	(*new)->next = NULL;
+	i = 0;
+	while (ptr[i])
+		free(ptr[i++]);
+	free(ptr);
+}
+
+int					is_data(char *str, t_data **data, int *stat)
+{
+	t_data			*new;
+	static t_data	*last;
+
+	new = *data;
+	is_data2(str, &new, *stat);
+	if (last == NULL)
+	{
+		*data = new;
+		last = *data;
+	}
 	else
-		(*data)->next = new;
+	{
+		last->next = new;
+		last = new;
+	}
+	*stat = 0;
 	return (1);
 }

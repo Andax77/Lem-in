@@ -3,12 +3,15 @@ GREP = grep "Error"
 INC_PATH = includes
 SRC_PATH = src
 SRC_NAME = lem_in.c\
-			lem_in2.c
+			lem_in2.c\
+			expand.c\
+			ft_go.c\
+			# ft_algo.c
 
 OBJ_PATH = obj
 LDFLAGS = -L libft/ -lft
 FLAGS = -I includes -I libft
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 RM = rm -f
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

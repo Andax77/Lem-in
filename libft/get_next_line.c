@@ -43,7 +43,7 @@ static int		ft_line(t_buf *tmp, char **line)
 	while (tmp->s[size_l] != '\n' && tmp->s[size_l] != '\r' &&
 			tmp->s[size_l] != '\0')
 		size_l++;
-	if (!(*line = malloc(sizeof(**line) * (size_l + 1))))
+	if (!(*line = (char*)malloc(sizeof(char) * (size_l + 1))))
 		return (-1);
 	ft_strncpy(*line, tmp->s, size_l);
 	(*line)[size_l] = '\0';
