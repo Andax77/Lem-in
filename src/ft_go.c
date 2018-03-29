@@ -14,24 +14,19 @@
 
 static int	ft_go1(t_data *data, t_link *link)
 {
-	t_data	*tmp;
 	t_link	*tmp2;
 	int		tube;
 	char	*start;
 	char	*end;
 
 	tube = 0;
-	tmp = data;
-	while (tmp)
+	while (data)
 	{
-		if (tmp->stat == 1)
-		{
-			printf("%s\n", tmp->name);
-			start = tmp->name;
-		}
-		else if (tmp->stat == 2)
-			end = tmp->name;
-		tmp = tmp->next;
+		if (data->stat == 1)
+			start = data->name;
+		else if (data->stat == 2)
+			end = data->name;
+		data = data->next;
 	}
 	printf("Start %s\n", start);
 	printf("End   %s\n", end);
@@ -57,9 +52,30 @@ static int	ft_go1(t_data *data, t_link *link)
 	return (1);
 }
 
+static int	ft_checker(t_data *data, t_link *link)
+{
+	int		error;
+
+	error = 0;
+	if (!(data) || !(link))
+		return (1);
+	while (data)
+	{
+		if (data->stat == 1 || data->stat == 2)
+			error++;
+		printf("%d %s %d %d\n",data->stat, data->name, data->y, data->x );
+		data = data->next;
+	}
+	if (error < 2)
+		return (1);
+	return (0);
+}
+
 void		ft_go(t_data *data, t_link *link, long ant)
 {
-	ant++;
+	printf("ant %ld\n",ant );
+	if (ft_checker(data, link))
+		ft_error("ERROR\n");
 	if (ft_go1(data, link))
 		printf("BOnjour\n");
 	else

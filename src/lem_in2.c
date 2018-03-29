@@ -20,17 +20,17 @@ static void			is_link2(char *str, t_link **new)
 	i = 0;
 	a = 0;
 	if (!((*new) = (t_link*)malloc(sizeof(t_link))))
-		perror("Malloc error to link-> is_link -> lem_in2.c");
+		ft_error("Malloc error to link-> is_link -> lem_in2.c");
 	while (str[i] != '-')
 		i++;
 	if (!((*new)->a = (char*)malloc(sizeof(char) * i + 1)))
-		perror("Malloc error to new.a -> is_link -> lem_in2.c");
+		ft_error("Malloc error to new.a -> is_link -> lem_in2.c");
 	(*new)->a = ft_strncpy((*new)->a, str, i);
 	(*new)->a[i] = '\0';
 	while (str[i++])
 		a++;
 	if (!((*new)->b = (char*)malloc(sizeof(char) * a + 1)))
-		perror("Malloc error to new.b -> is_link -> lem_in2.c");
+		ft_error("Malloc error to new.b -> is_link -> lem_in2.c");
 	(*new)->b = ft_strncpy((*new)->b, str + i - a, a);
 	(*new)->b[a] = '\0';
 	(*new)->next = NULL;
@@ -64,18 +64,18 @@ static void			is_data2(char *str, t_data **new, int stat)
 	i = -1;
 	a = 0;
 	if (!((*new) = (t_data*)malloc(sizeof(t_data))))
-		perror("Malloc error to data-> is_data -> lem_in2.c");
+		ft_error("Malloc error to data-> is_data -> lem_in2.c");
 	ptr = ft_strsplit(str, ' ');
 	while (ptr[0][a])
 		a++;
 	if (!((*new)->name = (char*)malloc(sizeof(char) * a + 1)))
-		perror("Malloc error to data.name -> is_data -> lem_in2.c");
+		ft_error("Malloc error to data.name -> is_data -> lem_in2.c");
 	while (ptr[0][++i])
 		(*new)->name[i] = str[i];
 	(*new)->name[i] = '\0';
 	(*new)->y = ft_atoi(ptr[1]);
 	(*new)->x = ft_atoi(ptr[2]);
-	(*new)->stat = !(*new)->stat ? stat : 0;
+	(*new)->stat = stat;
 	(*new)->next = NULL;
 	i = 0;
 	while (ptr[i])
@@ -89,7 +89,12 @@ int					is_data(char *str, t_data **data, int *stat)
 	static t_data	*last;
 
 	new = *data;
-	is_data2(str, &new, *stat);
+	if (ft_start(data, str, stat))
+		return (1);
+	else if (ft_end(data, str, stat))
+		return (1);
+	else
+		is_data2(str, &new, *stat);
 	if (last == NULL)
 	{
 		*data = new;

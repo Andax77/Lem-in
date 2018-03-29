@@ -44,9 +44,22 @@ long		ft_atol(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			perror("Ant WTH ?! -> ft_atol -> lem_in.c\n");
+			ft_error("Ant WTH ?! -> ft_atol -> lem_in.c\n");
 		nbr = nbr * 10 + (str[i] - '0');
 		i++;
 	}
 	return (nbr);
+}
+
+void		ft_error(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		write(2, &str[i], 1);
+		i++;
+	}
+	exit(0);
 }

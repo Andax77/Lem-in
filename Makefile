@@ -6,6 +6,7 @@ SRC_NAME = lem_in.c\
 			lem_in2.c\
 			expand.c\
 			ft_go.c\
+			ft_start_end.c\
 			# ft_algo.c
 
 OBJ_PATH = obj
