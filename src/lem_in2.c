@@ -89,9 +89,11 @@ int					is_data(char *str, t_data **data, int *stat)
 	static t_data	*last;
 
 	new = *data;
-	if (ft_start(data, str, stat))
+	if (ft_start(*data, str, stat))
 		return (1);
-	else if (ft_end(data, str, stat))
+	else if (ft_end(*data, str, stat))
+		return (1);
+	else if (ft_double_rooms(*data, str))
 		return (1);
 	else
 		is_data2(str, &new, *stat);
