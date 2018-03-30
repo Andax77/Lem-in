@@ -12,7 +12,11 @@
 
 #include "lem_in.h"
 
-void	ft_one_way(t_link *link, t_data *data, long ant)
+void		ft_all_way(t_data **data, t_link **link, long *ant)
 {
-	
+	t_way	*tmp;
+
+	(void)data;
+	(void)link;
+	(void)ant;
 }

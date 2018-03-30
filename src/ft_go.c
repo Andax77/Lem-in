@@ -63,7 +63,7 @@ static int	ft_checker(t_data *data, t_link *link)
 	{
 		if (data->stat == 1 || data->stat == 2)
 			error++;
-		printf("%d %s %d %d\n",data->stat, data->name, data->y, data->x );
+		// printf("%d %s %d %d\n",data->stat, data->name, data->y, data->x );
 		data = data->next;
 	}
 	if (error < 2)
@@ -73,14 +73,10 @@ static int	ft_checker(t_data *data, t_link *link)
 
 void		ft_go(t_data *data, t_link *link, long ant)
 {
-	printf("ant %ld\n",ant );
 	if (ft_checker(data, link))
 		ft_error("ERROR\n");
 	if (ft_go1(data, link))
 		printf("BOnjour\n");
 	else
-		ant++;
-		// ft_one_way(
-	// else
-	// 	ft_all_way(
+		ft_all_way(&data, &link, &ant);
 }

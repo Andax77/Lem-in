@@ -30,6 +30,19 @@ typedef struct	s_link
 	struct s_link	*next;
 }				t_link;
 
+typedef struct	s_path
+{
+	char			*path;
+	struct s_path	*next;
+}
+
+typedef struct	s_way
+{
+
+	struct s_path	*path;
+	struct s_way	*next;
+}				t_way;
+
 int				is_link(char *str, t_link **link);
 int				is_data(char *str, t_data **data, int *stat);
 void			ft_data_clear(t_data *data, t_link *link);
@@ -39,6 +52,6 @@ void			ft_error(char *str);
 int				ft_start(t_data *data, char *str, int *stat);
 int				ft_end(t_data *data, char *str, int *stat);
 int				ft_double_rooms(t_data *data, char *str);
-
+void			ft_all_way(t_data **data, t_link **link, long *ant);
 
 #endif

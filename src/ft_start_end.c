@@ -55,7 +55,7 @@ int			ft_end(t_data *data, char *str, int *stat)
 			ptr = ft_strsplit(str, ' ');
 			free(data->name);
 			if (!(data->name = malloc(sizeof(char) * ft_strlen(str) + 1)))
-				ft_error("Malloc error data.name ->ft_start-> ft_start_end.c");
+				ft_error("Malloc error data.name ->ft_end-> ft_start_end.c");
 			ft_strcpy(data->name, ptr[0]);
 			data->y = ft_atol(ptr[1]);
 			data->x = ft_atol(ptr[2]);
