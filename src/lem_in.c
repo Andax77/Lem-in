@@ -40,19 +40,19 @@ static char		**ft_tabcpy(char **old, int size, char *add)
 	{
 		if (!(new = malloc(sizeof(char*) * (size + 1))) ||
 			!(new[i] = malloc(sizeof(char) * ft_strlen(add) + 1)))
-			ft_error("Malloc error Array ->ft_data-> lem-in.c");
+			ft_error("Malloc error Array ->ft_data-> lem-in.c\n");
 		return (ft_strcpy(new[i], add) ? new : new);
 	}
 	if (!(new = malloc(sizeof(char*) * (size + 1))))
-		ft_error("Malloc error Array ->ft_data-> lem-in.c");
+		ft_error("Malloc error Array ->ft_data-> lem-in.c\n");
 	while (i != size)
 	{
 		if (!(new[i] = malloc(sizeof(char) * ft_strlen(old[i]) + 1)))
-			ft_error("Malloc error Array ->ft_data-> lem-in.c");
+			ft_error("Malloc error Array ->ft_data-> lem-in.c\n");
 		ft_strcpy(new[i], old[i]) && i++;
 	}
 	if (!(new[i] = malloc(sizeof(char) * ft_strlen(add) + 1)))
-		ft_error("Malloc error Array ->ft_data-> lem-in.c");
+		ft_error("Malloc error Array ->ft_data-> lem-in.c\n");
 	ft_strcpy(new[i], add) && !(i = 0);
 	while (i != size)
 		free(old[i++]);

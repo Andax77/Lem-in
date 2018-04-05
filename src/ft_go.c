@@ -28,8 +28,6 @@ static int	ft_go1(t_data *data, t_link *link)
 			end = data->name;
 		data = data->next;
 	}
-	printf("Start %s\n", start);
-	printf("End   %s\n", end);
 	tmp2 = link;
 	while (tmp2)
 	{
@@ -71,12 +69,30 @@ static int	ft_checker(t_data *data, t_link *link)
 	return (0);
 }
 
+static char	*ft_get(t_data *data, int stat)
+{
+	while (data->stat != stat)
+		data = data->next;
+	return (data->name);
+}
+
 void		ft_go(t_data *data, t_link *link, long ant)
 {
+	t_path	*path;
+	t_p		*p;
+
+	if (!(p = malloc(sizeof(t_p))))
+		ft_error("Malloc error -> ft_go -> ft_go.c\n");
 	if (ft_checker(data, link))
 		ft_error("ERROR\n");
+	p->start = ft_get(data, 1);
+	p->end = ft_get(data, 2);
 	if (ft_go1(data, link))
-		printf("BOnjour\n");
+		ft_path(&data, &link, &path, p);
 	else
-		ft_all_way(&data, &link, &ant);
+		while (ft_path(&data, &link, &path, p))
+			(void)ant;
+	free(p);
+	// while (ant)
+	// 	ft_djikstra(data, link, paht, &ant);
 }
