@@ -37,7 +37,22 @@ void		ft_clean(t_way *way)
 void		ft_structcpy(t_way *way, t_way **new)
 {
 	t_way	*tmp;
-
+	// t_way	*old;
+	// t_way	*old2;
+    //
+	// tmp = *new;
+	// old = *new;
+	// if (old)
+	// {
+	// 	while (old)
+	// 	{
+	// 		old2 = old;
+	// 		old = old->next;
+	// 		free(old2->str);
+	// 		free(old2);
+	// 	}
+	// 	tmp = NULL;
+	// }
 	if (!(tmp = malloc(sizeof(t_way))) ||
 		!(tmp->str = malloc(sizeof(char) * ft_strlen(way->str) + 1)))
 		ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
@@ -119,8 +134,6 @@ static int	ft_size_way(t_way *way)
 	int		i;
 
 	i = 0;
-	if (!way)
-		return (-1);
 	while (way)
 	{
 		way = way->next;
@@ -170,13 +183,14 @@ int		ft_new(t_way **way, t_way **new, t_p *p, t_link *link)
 	t_way	*tmp;
 
 	tmp = *way;
-	if (!ft_end_way(*way, p) && (ft_size_way(*way) > ft_size_way(*new)))
+	if (!ft_end_way(*way, p) && (ft_size_way(*way) < ft_size_way(*new) ||
+			!(*new)))
 	{
 		printf("Way %d > new %d\n", ft_size_way(*way), ft_size_way(*new));
 		ft_structcpy(*way, new);
 		return (1);
 	}
-	if (!ft_end_way(*way, p) || no_issue(*way, link))
+	if ((*way)->next && (!ft_end_way(*way, p) || no_issue(*way, link)))
 	{
 		while (tmp->forb)
 			tmp->forb = tmp->forb->next;
@@ -184,6 +198,7 @@ int		ft_new(t_way **way, t_way **new, t_p *p, t_link *link)
 			!(tmp->forb->str =
 				malloc(sizeof(char) * ft_strlen(get_name(*way, -2)) + 1)))
 			ft_error("Malloc error -> ft_recur -> ft_algo.c\n");
+		printf("IN\n");
 		ft_strcpy(tmp->forb->str, get_name(tmp, -1));
 		tmp->forb->next = NULL;
 		printf("FORBIDDEN %s\n", tmp->forb->str);
@@ -197,7 +212,7 @@ void		ft_freend(t_way *way)
 	t_way	*tmp;
 
 	tmp = way;
-	while (tmp->next->next)
+	while (tmp->next && tmp->next->next)
 		tmp = tmp->next;
 	while (way->next)
 		way = way->next;
@@ -220,15 +235,16 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 		link = link->next;
 		if (ft_new(way, new, p, link))
 			link = ori;
-
 	}
+	printf("Sorti\n");
 	if (link == NULL && (!ft_end_way(*way, p) || no_issue(*way, link)))
 	{
 		ft_freend(*way);
+		printf("CTES\n");
 		// ft_affichage(*way);
 	}
-	if (no_issue(*way, link) && !(*way)->next->next)
-		return ;
+	// if (no_issue(*way, link) && !(*way)->next->next)
+	// 	return ;
 }
 
 int			ft_path(t_data **data, t_link **link, t_path **path, t_p *p)
@@ -250,7 +266,6 @@ int			ft_path(t_data **data, t_link **link, t_path **path, t_p *p)
 	// ft_affichage(way);
 	(void)data;
 	//Ajout le way dans Path
-	ft_clean(way);
 	ft_clean(new);
 	return (*path ? 1 : 0);
 }
