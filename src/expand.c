@@ -63,3 +63,12 @@ void		ft_error(char *str)
 	}
 	exit(0);
 }
+
+void		ft_affichage(t_way *way)
+{
+	while (way)
+	{
+		ft_printf("%s\n", way->str);
+		way = way->next;
+	}
+}

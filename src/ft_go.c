@@ -81,8 +81,9 @@ void		ft_go(t_data *data, t_link *link, long ant)
 	t_path	*path;
 	t_p		*p;
 
-	if (!(p = malloc(sizeof(t_p))))
+	if (!(p = malloc(sizeof(t_p) + 1)))
 		ft_error("Malloc error -> ft_go -> ft_go.c\n");
+	path = NULL;
 	if (ft_checker(data, link))
 		ft_error("ERROR\n");
 	p->start = ft_get(data, 1);
