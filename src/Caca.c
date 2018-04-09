@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_algo.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anhuang <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 11:28:19 by anhuang           #+#    #+#             */
-/*   Updated: 2018/03/28 11:28:19 by anhuang          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "lem_in.h"
 
 int			ft_end_way(t_way *way, t_p *p)
@@ -86,6 +74,7 @@ int			noforb(t_way *way, t_link *link)
 
 static int	ft_check_passed2(t_way **tmp, t_link *link, t_way *new)
 {
+	printf("%s - %s\n", link->a, (*tmp)->str);
 	while (new)
 	{
 		if (ft_strcmp(link->a, new->str) == 0)
@@ -106,10 +95,11 @@ static int	ft_check_passed(t_link *link, t_way **way, t_way *new)
 	t_way	*tmp;
 
 	tmp = *way;
-	while (tmp->next)
+	while (tmp && tmp->next)
 		tmp = tmp->next;
 	if (ft_strcmp(link->a, tmp->str) == 0 && noforb(*way, link))
 	{
+		printf("%s - %s\n", link->b, tmp->str);
 		while (new)
 		{
 			if (ft_strcmp(link->b, new->str) == 0)
@@ -202,24 +192,17 @@ int		ft_new(t_way **way, t_way **new, t_p *p, t_link *link)
 		// printf("IN\n");
 		ft_strcpy(tmp->str, get_name(tmp2, -1));
 		tmp->forb = NULL;
-		// printf("FORBIDDEN %s\n", get_name(tmp2, -1));
+		printf("FORBIDDEN %s\n", tmp->str);
 	}
 	return (0);
 }
+//a free dans le way->forb
 
 void		ft_freend(t_way *way)
 {
-	t_way	*tmp;
 	t_way	*tmp2;
 	t_way	*tmp3;
-	t_way	*tmp4;
 
-	tmp = way;
-	tmp4 = way;
-	while (tmp4->forb)
-		tmp4 = tmp4->forb;
-	while (tmp->next->next)
-		tmp = tmp->next;
 	while (way->next)
 		way = way->next;
 	tmp2 = way->forb;
@@ -230,10 +213,10 @@ void		ft_freend(t_way *way)
 		free(tmp3->str);
 		free(tmp3);
 	}
-	tmp4->forb = NULL;
+	tmp3 = NULL;
 	free(way->str);
 	free(way);
-	tmp->next = NULL;
+	way = NULL;
 }
 
 void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)

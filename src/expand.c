@@ -66,9 +66,11 @@ void		ft_error(char *str)
 
 void		ft_affichage(t_way *way)
 {
+	ft_printf("End : ");
 	while (way)
 	{
-		ft_printf("%s\n", way->str);
+		ft_printf("%s-", way->str);
 		way = way->next;
 	}
+	ft_printf("\n");
 }
