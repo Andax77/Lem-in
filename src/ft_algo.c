@@ -216,7 +216,7 @@ int			ft_add_path(t_way *old, t_path **path, t_p *p)
 		!(tmp->str = malloc(sizeof(char) * ft_strlen(old->str) + 1)))
 		ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
 	ft_strcpy(tmp->str, p->start);
-	printf("Path %s\n",(*path)->str);
+	// printf("Path %s\n",(*path)->str);
 	tmp->path = NULL;
 	while (old->next)
 	{
@@ -230,6 +230,45 @@ int			ft_add_path(t_way *old, t_path **path, t_p *p)
 	tmp->path = NULL;
 	tmp->next = NULL;
 	return (1);
+}
+
+void		ft_rm_way(t_link **link, t_way *way)
+{
+	t_link	*tmp;
+	t_link	*init;
+	t_link	*init2;
+	t_link	*link2;
+	int		i;
+
+	way = way->next;
+	while (way->next)
+	{
+		i = 0;
+		link2 = *link;
+		init = *link;
+		while (init)
+		{
+			if (ft_strcmp(way->str, init->a) == 0 ||
+				ft_strcmp(way->str, init->b) == 0)
+			{
+				tmp = init;
+				if (i == 0)
+					*link = init->next;
+				else
+					link2->next = init->next;
+				free(tmp->a);
+				free(tmp->b);
+				free(tmp);
+			}
+			link2 = (i == 0 ? link2 : link2->next);
+			i++;
+			if (!init->next)
+				init->next = NULL;
+			init = init->next;
+		}
+		way = way->next;
+	}
+	printf("C'est du propre\n");
 }
 
 int			ft_path(t_link **link, t_path **path, t_p *p)
@@ -249,10 +288,17 @@ int			ft_path(t_link **link, t_path **path, t_p *p)
 	ft_affichage(add);
 	ft_add_path(add, path, p);
 	printf("Je sors\n");
+	ft_rm_way(link, add);
+	while (*link)
+	{
+		printf("Rella\n");
+		printf("%s-%s\n", (*link)->a, (*link)->b);
+		(*link) = (*link)->next;
+	}
+	printf("Je suis sur\n");
 	printf("%s\n",(*path)->next->str);
 	//Ajout le way dans Path
 	ft_clean(add);
 	ft_clean(way);
-    // remove the way(add) from map
 	return (*path ? 1 : 0);
 }
