@@ -21,30 +21,18 @@ int			ft_end_way(t_way *way, t_p *p)
 	return (1);
 }
 
-void		ft_clean(t_way *way)
+int			noforb(t_way *way, t_link *link)
 {
-	t_way	*tmp;
-
-	while (way)
-	{
-		tmp = way;
+	while (way->next)
 		way = way->next;
-		free(tmp->str);
-		free(tmp);
-	}
-}
-
-void		ft_freecpy(t_way *old)
-{
-	t_way	*tmp;
-
-	while (old)
+	while (way->forb)
 	{
-		tmp = old;
-		old = old->next;
-		free(tmp->str);
-		free(tmp);
+		if (ft_strcmp(way->forb->str, link->a) == 0 ||
+			ft_strcmp(way->forb->str, link->b) == 0)
+			return (0);
+		way->forb = way->forb->next;
 	}
+	return (1);
 }
 
 int			ft_structcpy(t_way *way, t_way **new)
@@ -67,20 +55,6 @@ int			ft_structcpy(t_way *way, t_way **new)
 		tmp = tmp->next;
 	}
 	tmp->next = NULL;
-	return (1);
-}
-
-int			noforb(t_way *way, t_link *link)
-{
-	while (way->next)
-		way = way->next;
-	while (way->forb)
-	{
-		if (ft_strcmp(way->forb->str, link->a) == 0 ||
-			ft_strcmp(way->forb->str, link->b) == 0)
-			return (0);
-		way->forb = way->forb->next;
-	}
 	return (1);
 }
 
@@ -199,41 +173,11 @@ int		ft_new(t_way **way, t_way **new, t_p *p, t_link *link)
 			!(tmp->str =
 				malloc(sizeof(char) * ft_strlen(get_name(*way, -2)) + 1)))
 			ft_error("Malloc error -> ft_recur -> ft_algo.c\n");
-		// printf("IN\n");
 		ft_strcpy(tmp->str, get_name(tmp2, -1));
 		tmp->forb = NULL;
 		// printf("FORBIDDEN %s\n", get_name(tmp2, -1));
 	}
 	return (0);
-}
-
-void		ft_freend(t_way *way)
-{
-	t_way	*tmp;
-	t_way	*tmp2;
-	t_way	*tmp3;
-	t_way	*tmp4;
-
-	tmp = way;
-	tmp4 = way;
-	while (tmp4->forb)
-		tmp4 = tmp4->forb;
-	while (tmp->next->next)
-		tmp = tmp->next;
-	while (way->next)
-		way = way->next;
-	tmp2 = way->forb;
-	while (tmp2)
-	{
-		tmp3 = tmp2;
-		tmp2 = tmp2->forb;
-		free(tmp3->str);
-		free(tmp3);
-	}
-	tmp4->forb = NULL;
-	free(way->str);
-	free(way);
-	tmp->next = NULL;
 }
 
 void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
@@ -250,12 +194,8 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 		link = link->next;
 		if (ft_new(way, new, p, link))
 			link = ori;
-		// if (ft_end_way(*way, p))
-		// 	breaks ;
 	}
-	// ft_affichage(*way);
 	// printf("Sorti\n");
-	// printf("%d\n",no_issue(*way, link));
 	if ((*way)->next && (!ft_end_way(*way, p) || no_issue(*way, link)))
 	{
 		ft_affichage(*way);
@@ -263,25 +203,56 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 	}
 }
 
-int			ft_path(t_data **data, t_link **link, t_path **path, t_p *p)
+int			ft_add_path(t_way *old, t_path **path, t_p *p)
+{
+	t_path	*tmp;
+
+	tmp = (*path) ? (*path)->path : *path;
+	printf("%p\n%p\n",*path, tmp);
+	if (tmp)
+		while (tmp->path)
+			tmp = tmp->path;
+	if (!(tmp = malloc(sizeof(t_path))) ||
+		!(tmp->str = malloc(sizeof(char) * ft_strlen(old->str) + 1)))
+		ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
+	ft_strcpy(tmp->str, p->start);
+	printf("Path %s\n",(*path)->str);
+	tmp->path = NULL;
+	while (old->next)
+	{
+		if (!(tmp->next = malloc(sizeof(t_path))) ||
+			!(tmp->next->str = malloc(sizeof(char) * ft_strlen(old->str) + 1)))
+			ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
+		ft_strcpy(tmp->next->str, old->next->str);
+		old = old->next;
+		tmp = tmp->next;
+	}
+	tmp->path = NULL;
+	tmp->next = NULL;
+	return (1);
+}
+
+int			ft_path(t_link **link, t_path **path, t_p *p)
 {
 	t_way	*way;
-	t_way	*new;
+	t_way	*add;
 
-	if (!(way = malloc(sizeof(t_way))))
-		ft_error("Malloc error -> ft_path -> ft_algo.c\n");
-	if (!(way->str = malloc(sizeof(char*) * ft_strlen(p->start) + 1)))
+	if (!(way = malloc(sizeof(t_way))) ||
+	!(way->str = malloc(sizeof(char*) * ft_strlen(p->start) + 1)))
 		ft_error("Malloc error -> ft_path -> ft_algo.c\n");
 	way->str = ft_strcpy(way->str, p->start);
 	way->next = NULL;
 	way->forb = NULL;
-	new = NULL;
-	ft_recur(*link, &way, p, &new);
-	printf("Coucou\n" );
-	ft_affichage(new);
-	(void)data;
+	add = NULL;
+	ft_recur(*link, &way, p, &add);
+	printf("Coucou\n");
+	ft_affichage(add);
+	ft_add_path(add, path, p);
+	printf("Je sors\n");
+	printf("%s\n",(*path)->next->str);
 	//Ajout le way dans Path
-	ft_clean(new);
+	ft_clean(add);
 	ft_clean(way);
+    // remove the way(add) from map
 	return (*path ? 1 : 0);
 }

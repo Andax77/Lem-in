@@ -89,9 +89,9 @@ void		ft_go(t_data *data, t_link *link, long ant)
 	p->start = ft_get(data, 1);
 	p->end = ft_get(data, 2);
 	if (ft_go1(data, link))
-		ft_path(&data, &link, &path, p);
+		ft_path(&link, &path, p);
 	else
-		while (ft_path(&data, &link, &path, p))
+		while (ft_path(&link, &path, p))
 			(void)ant;
 	free(p);
 	// while (ant)
