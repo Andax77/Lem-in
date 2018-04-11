@@ -92,7 +92,7 @@ void		ft_go(t_data *data, t_link *link, long ant)
 		ft_path(&link, &path, p);
 	else
 		while (ft_path(&link, &path, p))
-			(void)ant;
+			printf("Ant ? %ld\n", ant);;
 	free(p);
 	// while (ant)
 	// 	ft_djikstra(data, link, paht, &ant);

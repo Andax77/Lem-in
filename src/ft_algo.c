@@ -248,7 +248,7 @@ int			ft_add_path2(t_way *old, t_path **path, t_p *p)
 		tmp = tmp->next;
 	}
 	tmp->next = NULL;
-	printf("WHAA%s\n", tmp->str);
+	// printf("WHAA%s\n", tmp->str);
 	return (1);
 }
 
@@ -272,24 +272,28 @@ void		ft_rm_way(t_link **link, t_way *way)
 				ft_strcmp(way->str, init->b) == 0))
 			{
 				tmp = init;
-				printf("ici ?\n");
 				if (i == 0)
 				{
+					if (!init->next)
+						*link = NULL;
 					// printf("%s - %s\n",init->next->a, init->next->b);
 					*link = init->next;
+					link2 = *link;
+					// printf("deux fois ? %s-%s\n", (*link)->a, (*link)->b);
 				}
 				else if (!init->next)
 				{
-					printf("OUUOU\n");
+					// printf("OUUOU\n");
 					link2->next = NULL;
 				}
 				else
 				{
-					printf("puttt\n" );
+					// printf("puttt\n" );
 					// printf("%s - %s\n",init->next->a, init->next->b);
 					link2->next = init->next;
+					// printf("deux fois ? %s-%s\n", link2->next->a, link2->next->b);
 				}
-				printf("Non pas ici\n");
+				// printf("Non pas ici\n");
 				init = init->next;
 				free(tmp->a);
 				free(tmp->b);
@@ -299,8 +303,8 @@ void		ft_rm_way(t_link **link, t_way *way)
 			{
 				if (!init->next)
 				{
-					printf("OUUOU\n");
-					link2->next = NULL;
+					// printf("OUUOU\n");
+					link2->next->next = NULL;
 				}
 				else
 					link2 = (i == 0 ? link2 : link2->next);
@@ -308,10 +312,10 @@ void		ft_rm_way(t_link **link, t_way *way)
 				init = init->next;
 			}
 		}
-		printf("Ca bug pas\n" );
+		// printf("Ca bug pas\n" );
 		way = way->next;
 	}
-	printf("C'est du propre\n");
+	// printf("C'est du propre\n");
 }
 
 int			ft_path(t_link **link, t_path **path, t_p *p)
@@ -327,21 +331,22 @@ int			ft_path(t_link **link, t_path **path, t_p *p)
 	way->forb = NULL;
 	add = NULL;
 	ft_recur(*link, &way, p, &add);
-	printf("Coucou\n");
+	if (!add)
+		return (0);
 	ft_affichage(add);
 	if (!(*path))
 		ft_add_path(add, path, p);
 	else
 		ft_add_path2(add, path, p);
-	printf("Patheeee %s\n",(*path)->str);
+	// printf("Patheeee %s\n",(*path)->str);
 	ft_rm_way(link, add);
-	while (*link)
-	{
-		printf("Rella\n");
-		printf("%s-%s\n", (*link)->a, (*link)->b);
-		(*link) = (*link)->next;
-	}
-	printf("Je suis sur\n");
+	// while (*link)
+	// {
+	// 	printf("Rella\n");
+	// 	printf("%s-%s\n", (*link)->a, (*link)->b);
+	// 	(*link) = (*link)->next;
+	// }
+	// printf("Je suis sur\n");
 	ft_clean(add);
 	ft_clean(way);
 	return (*path ? 1 : 0);
