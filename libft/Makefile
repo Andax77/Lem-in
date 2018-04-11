@@ -106,7 +106,7 @@ SRC = ./ft_atoi.c \
 
 OBJ = $(SRC:.c=.o)
 DEL = rm -f
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -g
 
 all: $(NAME)
 
