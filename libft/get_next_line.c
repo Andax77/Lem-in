@@ -23,10 +23,11 @@ static void		*ft_realloc(void *ptr, size_t size)
 		ft_memdel(&ptr);
 		return (newptr);
 	}
-	if (!(newptr = (char*)malloc(size)))
+	if (!(newptr = (char*)malloc(size + 1)))
 		return (NULL);
 	if (ptr)
 	{
+		ft_bzero(newptr, size + 1);
 		ft_memcpy(newptr, ptr, size);
 		ft_memdel(&ptr);
 	}
@@ -35,8 +36,9 @@ static void		*ft_realloc(void *ptr, size_t size)
 
 static int		ft_line(t_buf *tmp, char **line)
 {
-	size_t			size_l;
-	size_t			size_f;
+	size_t	size_l;
+	size_t	size_f;
+	char	*new_tmp;
 
 	size_f = ft_strlen(tmp->s);
 	size_l = 0;
@@ -47,10 +49,14 @@ static int		ft_line(t_buf *tmp, char **line)
 		return (-1);
 	ft_strncpy(*line, tmp->s, size_l);
 	(*line)[size_l] = '\0';
-	ft_memmove(tmp->s, tmp->s + size_l + 1, size_f - size_l);
-	if (!(tmp->s = ft_realloc(tmp->s, size_f - size_l + 1)))
+	if (tmp->s[size_l] == '\n' || tmp->s[size_l] == '\r')
+		++size_l;
+	if (!(new_tmp = (char*)malloc(sizeof(char) * (size_f - size_l + 1))))
 		return (-1);
-	tmp->s[size_f - size_l] = '\0';
+	ft_strncpy(new_tmp, tmp->s + size_l, size_f - size_l);
+	new_tmp[size_f - size_l] = '\0';
+	free(tmp->s);
+	tmp->s = new_tmp;
 	return (1);
 }
 
@@ -70,7 +76,7 @@ static int		ft_getread(t_buf *tmp, char **line, int fd)
 		buf[ret] = '\0';
 		if (!(tmp->s = ft_realloc(tmp->s, ft_strlen(tmp->s) + ret + 1)))
 			return (-1);
-		ft_strncat(tmp->s, buf, ret);
+		ft_strcat(tmp->s, buf);
 		return (ft_getread(tmp, line, fd));
 	}
 	else if (ret == 0 && ft_strlen(tmp->s) == 0)
@@ -90,8 +96,11 @@ int				get_next_line(const int fd, char **line)
 	*line = NULL;
 	ret = 0;
 	if (file.s == NULL)
+	{
 		if (!(file.s = (char*)malloc(1)))
 			return (-1);
+		file.s[0] = '\0';
+	}
 	ret = ft_getread(&file, line, fd);
 	return (ret);
 }

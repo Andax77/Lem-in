@@ -19,6 +19,8 @@ char		*ft_strncat(char *dest, const char *src, size_t n)
 
 	a = 0;
 	i = 0;
+	if (!dest)
+		return (dest);
 	while (dest[i] != '\0')
 		i++;
 	while (n != a && src[a])
