@@ -109,7 +109,7 @@ int				main(int argc, char const *argv[])
 	(void)argv;
 	(void)argc;
 	ant = ft_data(&data, &link, 0);
-	ft_go(data, link, ant);
+	ft_go(data, &link, ant);
 	ft_data_clear(data, link);
 	return (0);
 }

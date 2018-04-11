@@ -61,7 +61,6 @@ static int	ft_checker(t_data *data, t_link *link)
 	{
 		if (data->stat == 1 || data->stat == 2)
 			error++;
-		// printf("%d %s %d %d\n",data->stat, data->name, data->y, data->x );
 		data = data->next;
 	}
 	if (error < 2)
@@ -76,7 +75,26 @@ static char	*ft_get(t_data *data, int stat)
 	return (data->name);
 }
 
-void		ft_go(t_data *data, t_link *link, long ant)
+void		ft_clear_path(t_path *path)
+{
+	t_path	*tmp;
+	t_path	*tmp2;
+
+	while (path)
+	{
+		tmp = path;
+		path = path->path;
+		while (tmp)
+		{
+			tmp2 = tmp;
+			tmp = tmp->next;
+			free(tmp2->str);
+			free(tmp2);
+		}
+	}
+}
+
+void		ft_go(t_data *data, t_link **link, long ant)
 {
 	t_path	*path;
 	t_p		*p;
@@ -84,16 +102,17 @@ void		ft_go(t_data *data, t_link *link, long ant)
 	if (!(p = malloc(sizeof(t_p) + 1)))
 		ft_error("Malloc error -> ft_go -> ft_go.c\n");
 	path = NULL;
-	if (ft_checker(data, link))
+	if (ft_checker(data, *link))
 		ft_error("ERROR\n");
 	p->start = ft_get(data, 1);
 	p->end = ft_get(data, 2);
-	if (ft_go1(data, link))
-		ft_path(&link, &path, p);
+	if (ft_go1(data, *link))
+		ft_path(link, &path, p);
 	else
-		while (ft_path(&link, &path, p))
-			printf("Ant ? %ld\n", ant);;
+		while (ft_path(link, &path, p))
+			ft_printf("Ant ? %ld\n", ant);
 	free(p);
 	// while (ant)
 	// 	ft_djikstra(data, link, paht, &ant);
+	ft_clear_path(path);
 }

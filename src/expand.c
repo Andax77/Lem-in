@@ -26,6 +26,7 @@ void		ft_data_clear(t_data *data, t_link *link)
 	}
 	while (link)
 	{
+		printf("Link ?%s\n", link->a);
 		tmp2 = link;
 		link = link->next;
 		free(tmp2->a);

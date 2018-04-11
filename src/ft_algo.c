@@ -338,15 +338,7 @@ int			ft_path(t_link **link, t_path **path, t_p *p)
 		ft_add_path(add, path, p);
 	else
 		ft_add_path2(add, path, p);
-	// printf("Patheeee %s\n",(*path)->str);
 	ft_rm_way(link, add);
-	// while (*link)
-	// {
-	// 	printf("Rella\n");
-	// 	printf("%s-%s\n", (*link)->a, (*link)->b);
-	// 	(*link) = (*link)->next;
-	// }
-	// printf("Je suis sur\n");
 	ft_clean(add);
 	ft_clean(way);
 	return (*path ? 1 : 0);
