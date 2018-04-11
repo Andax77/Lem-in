@@ -7,7 +7,8 @@ SRC_NAME = lem_in.c\
 			expand.c\
 			ft_go.c\
 			ft_start_end.c\
-			ft_algo.c
+			ft_algo.c \
+			freeman.c
 
 OBJ_PATH = obj
 LDFLAGS = -L libft/ -lft
@@ -18,10 +19,11 @@ OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
-all: $(NAME) $(NAME2)
+all:
+		@make -C libft
+		@make $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C libft
 	@libtool -static -o $(NAME) $(OBJ) libft/libft.a
 	@gcc $(FLAGS) $(LDFLAGS) $(CFLAGS) -o $@ $^
 	@printf '\033[32m[ ✔ ] %s\n\033[0m' " 🍯 Create Lem_in🍯   [ ✔ ]"
