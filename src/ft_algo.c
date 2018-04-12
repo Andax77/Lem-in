@@ -167,15 +167,15 @@ int		ft_new(t_way **way, t_way **new, t_p *p, t_link *link)
 	{
 		while (tmp->next)
 			tmp = tmp->next;
-		while (tmp)
+		while (tmp->forb)
 			tmp = tmp->forb;
-		if (!(tmp = malloc(sizeof(t_way))) ||
-			!(tmp->str =
+		if (!(tmp->forb = malloc(sizeof(t_way))) ||
+			!(tmp->forb->str =
 				malloc(sizeof(char) * ft_strlen(get_name(*way, -2)) + 1)))
 			ft_error("Malloc error -> ft_recur -> ft_algo.c\n");
-		ft_strcpy(tmp->str, get_name(tmp2, -1));
-		tmp->forb = NULL;
-		// printf("FORBIDDEN %s\n", get_name(tmp2, -1));
+		ft_strcpy(tmp->forb->str, get_name(tmp2, -1));
+		tmp->forb->forb = NULL;
+		printf("FORBIDDEN %s\n", get_name(tmp2, -1));
 	}
 	return (0);
 }
