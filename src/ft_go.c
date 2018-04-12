@@ -88,6 +88,7 @@ void		ft_clear_path(t_path *path)
 		{
 			tmp2 = tmp;
 			tmp = tmp->next;
+			printf("free : %s\n",tmp2->str);
 			free(tmp2->str);
 			free(tmp2);
 		}

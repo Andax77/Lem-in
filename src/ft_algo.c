@@ -195,7 +195,6 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 		if (ft_new(way, new, p, link))
 			link = ori;
 	}
-	// printf("Sorti\n");
 	if ((*way)->next && (!ft_end_way(*way, p) || no_issue(*way, link)))
 	{
 		ft_affichage(*way);
@@ -230,14 +229,15 @@ int			ft_add_path2(t_way *old, t_path **path, t_p *p)
 {
 	t_path	*tmp;
 
-	tmp = (*path)->path;
-	while (tmp && tmp->path)
+	tmp = ((*path)->path ? (*path)->path : *path);
+	while (tmp->path)
 		tmp = tmp->path;
-	if (!(tmp = malloc(sizeof(t_path))) ||
-		!(tmp->str = malloc(sizeof(char) * ft_strlen(p->start) + 1)))
+	if (!(tmp->path = malloc(sizeof(t_path))) ||
+		!(tmp->path->str = malloc(sizeof(char) * ft_strlen(p->start) + 1)))
 		ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
-	ft_strcpy(tmp->str, p->start);
-	tmp->path = NULL;
+	ft_strcpy(tmp->path->str, p->start);
+	tmp->path->path = NULL;
+	tmp = tmp->path;
 	while (old && old->next)
 	{
 		if (!(tmp->next = malloc(sizeof(t_path))) ||

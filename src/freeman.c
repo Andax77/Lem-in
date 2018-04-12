@@ -4,11 +4,24 @@
 void		ft_clean(t_way *way)
 {
 	t_way	*tmp;
+	// t_way	*tmp2;
+	// t_way	*forb;
 
 	while (way)
 	{
 		tmp = way;
 		way = way->next;
+		// if (tmp->forb)
+		// {
+		// 	tmp2 = tmp->forb;
+		// 	while (tmp2)
+		// 	{
+		// 		forb = tmp2;
+		// 		tmp2 = tmp2->forb;
+		// 		free(forb->str);
+		// 		free(forb);
+		// 	}
+		// }
 		free(tmp->str);
 		free(tmp);
 	}
