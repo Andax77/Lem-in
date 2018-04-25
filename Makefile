@@ -8,7 +8,9 @@ SRC_NAME = lem_in.c\
 			ft_go.c\
 			ft_start_end.c\
 			ft_algo.c \
-			freeman.c
+			freeman.c\
+			ft_addrm_way.c\
+			ft_forb.c
 
 OBJ_PATH = obj
 LDFLAGS = -L libft/ -lft
