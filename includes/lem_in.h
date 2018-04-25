@@ -52,9 +52,8 @@ typedef struct	s_p
 
 void			ft_clean(t_way *way);
 void			ft_freecpy(t_way *old);
-void			ft_clean2(t_path *way);
-void			ft_freecpy2(t_way *old);
-void			ft_freend(t_way *way);
+int				ft_freend(t_way *way);
+void			ft_rm_way(t_link **link, t_way *way);
 
 int				is_link(char *str, t_link **link);
 int				is_data(char *str, t_data **data, int *stat);

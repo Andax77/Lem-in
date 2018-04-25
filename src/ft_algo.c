@@ -28,14 +28,12 @@ int			noforb(t_way *way, t_link *link)
 	tmp = way;
 	while (tmp->next)
 		tmp = tmp->next;
-	// printf("CCCCCCCCCCCCCCCCC %p\n",tmp->forb);
 	while (tmp->forb)
 	{
 		tmp = tmp->forb;
 		if (ft_strcmp(tmp->str, link->a) == 0 ||
 			ft_strcmp(tmp->str, link->b) == 0)
 			return (0);
-		// printf("DDDDDDDDDDDDDD %p\n",tmp);
 	}
 	return (1);
 }
@@ -73,12 +71,12 @@ static int	ft_check_passed2(t_way **tmp, t_link *link, t_way *new)
 			return (0);
 		new = new->next;
 	}
-	// printf("Check 2\n");
+	ft_printf("Check 2\n");
 	if (!((*tmp)->next = malloc(sizeof(t_way))) ||
 		!((*tmp)->next->str = malloc(sizeof(char) * ft_strlen(link->a) + 1)))
 		ft_error("Malloc error -> ft_check_passed2 -> ft_algo.c\n");
 	(*tmp)->next->str = ft_strcpy((*tmp)->next->str, link->a);
-	// printf("Add %s\n",link->a);
+	ft_printf("Add %s\n",link->a);
 	*tmp = (*tmp)->next;
 	(*tmp)->next = NULL;
 	(*tmp)->forb = NULL;
@@ -92,22 +90,20 @@ static int	ft_check_passed(t_link *link, t_way **way, t_way *new)
 	tmp = *way;
 	while (tmp->next)
 		tmp = tmp->next;
-	// printf("AAAAAAAAAAA %p\n",(*way)->forb);
 	if (ft_strcmp(link->a, tmp->str) == 0 && noforb(*way, link))
 	{
-		// printf("BBBBBBBBBB %p\n",(*way)->forb);
 		while (new)
 		{
 			if (ft_strcmp(link->b, new->str) == 0)
 				return (0);
 			new = new->next;
 		}
-		// printf("Check 1\n");
+		ft_printf("Check 1\n");
 		if (!(tmp->next = malloc(sizeof(t_way))) ||
 			!(tmp->next->str = malloc(sizeof(char) * ft_strlen(link->b) + 1)))
 			ft_error("Malloc error -> ft_recur -> ft_algo.c\n");
 		tmp->next->str = ft_strcpy(tmp->next->str, link->b);
-		// printf("Add %s\n",link->b);
+		ft_printf("Add %s\n",link->b);
 		tmp = tmp->next;
 		tmp->next = NULL;
 		tmp->forb = NULL;
@@ -164,8 +160,8 @@ int			no_issue(t_way *way, t_link *link)
 		way = way->next;
 	while (link)
 	{
-		if ((!ft_strcmp(link->a, way->str) && ft_strcmp(link->b, tmp->str)) ||
-			(!ft_strcmp(link->b, way->str) && ft_strcmp(link->a, tmp->str))
+		if ((ft_strcmp(link->a, way->str) == 0 && ft_strcmp(link->b, link->a)) > 0 ||
+			(ft_strcmp(link->b, way->str) == 0 && ft_strcmp(link->a, link->b)) > 0
 			|| noforb(forb, link))
 			return (0);
 		link = link->next;
@@ -201,43 +197,29 @@ static int	ft_new(t_way **way, t_way **new, t_link *link, t_p *p)
 
 	tmp = *way;
 	tmp2 = tmp;
-	// printf("A la sortie de l'ecole Bussy %p\n",(*way)->forb);
 	if ((*way)->next && (no_issue(*way, link) || ft_end_way(*way, p)))
 	{
-		// printf("Goo\n" );
-		// printf("A la sortie de l'ecole %p\n",(*way)->forb);
+		ft_affichage(*way);
 		if (ft_end_way(*way, p) && (ft_size_way(*way) < ft_size_way(*new) ||
 				!(*new)))
 			ft_structcpy(*way, new);
 		while (tmp->next->next)
 			tmp = tmp->next;
-		ft_printf("Malloc salle %s\n",tmp->str);
-		if (tmp->forb)
-		{
-			ft_printf("DECALAGE COUPE\n" );
-			while (tmp->forb)
-			{
-				ft_printf("DECALAGE COUPE\n" );
-				tmp = tmp->forb;
-			}
-		}
+		ft_printf("Malloc salle %s\n", tmp->str);
+		while (tmp->forb)
+			tmp = tmp->forb;
 		if (!(tmp->forb = malloc(sizeof(t_way))) ||
 			!(tmp->forb->str =
 				malloc(sizeof(char) * ft_strlen(get_name(*way, -2)) + 1)))
 			ft_error("Malloc error -> ft_new -> ft_algo.c\n");
-		// tmp->forb = tmp->next;
 		tmp->forb->str = ft_strcpy(tmp->forb->str, get_name(tmp2, -1));
 		ft_printf("FORBIDDEN %s->%s\n", tmp->str, tmp->forb->str);
 		tmp = tmp->forb;
-		ft_printf("%s\n",tmp->str );
 		ft_freend(tmp2);
-		ft_printf("%s\n",tmp->str );
 		tmp->next = NULL;
 		tmp->forb = NULL;
 		ft_affichage(*way);
-		// printf("tegdfgfdgfdgdfst, %p\n", tmp);
 	}
-	// printf("Outt\n" );
 	return (0);
 }
 
@@ -248,35 +230,19 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 
 	ori = link;
 	tmp = *way;
-	// printf("Ernest\n" );
-	// if ((*way)->forb)
-		// printf("A la sortie de l'ecole 42 %p\n",(*way)->forb);
 	while (link && ft_end_way(*way, p) == 0)
 	{
-		// printf("stop ?\n" );
-		// if ((*way)->forb)
-			// printf("A la sortie de l'ecole 101 %p\n",(*way)->forb);
 		if (ft_check_passed(link, way, tmp))
-		{
-			// printf("A la sortie de l'ecole Arret ? %p\n",(*way)->forb);
 			ft_recur(ori, way, p, new);
-		}
 		link = link->next;
 		if (ft_new(way, new, link, p))
 			link = ori;
-		// if ((*way)->forb)
-			// printf("A la sortie de l'ecole Saint %p\n",(*way)->forb);
-		ft_forb(*way);
 	}
-	// printf("Je sors deja\n");
+	printf("Je sors deja\n");
 	if ((*way)->next && (ft_end_way(*way, p) || no_issue(*way, ori)))
 	{
-		// printf("No issue\n");
-		// printf("%s\n",(*way)->forb->str);
 		ft_affichage(*way);
 		ft_new(way, new, link, p);
-		ft_forb(*way);
-		// ft_freend(*way);
 	}
 }
 
@@ -343,17 +309,17 @@ int			ft_path(t_link **link, t_path **path, t_p *p)
 	add = NULL;
 	ft_recur(*link, &way, p, &add);
 	if (!add)
-		return (0);
-	printf("New end :\n" );
+		return (ft_freend(way) ? 0 : 1);
+	printf("New end :\n");
 	ft_affichage(add);
 	if (!(*path))
 		ft_add_path(add, path, p);
 	else
 		ft_add_path2(add, path, p);
 	ft_rm_way(link, add);
+	printf("Ici JE SORS WAAH\n");
 	ft_clean(add);
 	ft_affichage(way);
-	free(way->str);
-	free(way);
+	ft_freend(way);
 	return (*path ? 1 : 0);
 }

@@ -88,7 +88,7 @@ void		ft_clear_path(t_path *path)
 		{
 			tmp2 = tmp;
 			tmp = tmp->next;
-			printf("free : %s\n",tmp2->str);
+			// printf("free : %s\n",tmp2->str);
 			free(tmp2->str);
 			free(tmp2);
 		}
@@ -111,7 +111,7 @@ void		ft_go(t_data *data, t_link **link, long ant)
 		ft_path(link, &path, p);
 	else
 		while (ft_path(link, &path, p))
-			ft_printf("Ant ? %ld\n", ant);
+			ft_printf("Ant ? %ld\n\n\n", ant);
 	free(p);
 	// while (ant)
 	// 	ft_djikstra(data, link, paht, &ant);
