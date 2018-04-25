@@ -26,7 +26,7 @@ void		ft_data_clear(t_data *data, t_link *link)
 	}
 	while (link)
 	{
-		ft_printf("Link ?%s\n", link->a);
+		// ft_printf("Link ?%s\n", link->a);
 		tmp2 = link;
 		link = link->next;
 		free(tmp2->a);
@@ -45,7 +45,7 @@ long		ft_atol(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			ft_error("Ant WTH ?! -> ft_atol -> lem_in.c\n");
+			ft_error("ERROR\n");
 		nbr = nbr * 10 + (str[i] - '0');
 		i++;
 	}

@@ -43,16 +43,16 @@ int		ft_freend(t_way *way)
 		tmp2 = way->forb;
 		while (tmp2)
 		{
-			ft_printf("Je freee forb\n" );
+			// ft_printf("Je freee forb\n" );
 			tmp3 = tmp2;
 			tmp2 = tmp2->forb;
-			ft_printf("%s\n",tmp3->str);
+			// ft_printf("%s\n",tmp3->str);
 			free(tmp3->str);
 			free(tmp3);
 		}
 		way->forb = NULL;
 	}
-	ft_printf("Je freee way\n%s\n", way->str);
+	// ft_printf("Je freee way\n%s\n", way->str);
 	if (tmp4->next)
 		tmp4->next = NULL;
 	free(way->str);
@@ -77,7 +77,7 @@ static void	ft_rm_way2(t_link **init, t_link **link, t_link **link2, int i)
 	else
 		(*link2)->next = (*init)->next;
 	(*init) = (*init)->next;
-	ft_printf("Link rm %s-%s\n", tmp->a, tmp->b);
+	// ft_printf("Link rm %s-%s\n", tmp->a, tmp->b);
 	free(tmp->a);
 	free(tmp->b);
 	free(tmp);
