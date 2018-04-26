@@ -88,4 +88,8 @@ int				ft_add_path2(t_way *old, t_path **path, t_p *p);
 int				ft_check_passed2(t_way **tmp, t_link *link, t_way *new);
 int				ft_check_passed(t_link *link, t_way **way, t_way *new);
 
+/*
+display.c
+*/
+void        	ant_display(t_path *path, long ant);
 #endif
