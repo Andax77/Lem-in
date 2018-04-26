@@ -92,4 +92,5 @@ int				ft_check_passed(t_link *link, t_way **way, t_way *new);
 display.c
 */
 void        	ant_display(t_path *path, long ant);
+
 #endif

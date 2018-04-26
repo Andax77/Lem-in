@@ -80,7 +80,7 @@ static long		ft_data(t_data **data, t_link **link, long ant)
 
 	i = 0;
 	stat = 0;
-	ptr = NULL
+	ptr = NULL;
 	while ((ret = get_next_line(STDIN_FILENO, &arg)) == 1)
 	{
 		if (ant == 0)
