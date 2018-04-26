@@ -81,6 +81,8 @@ int			ft_double_rooms(t_data *data, char *str)
 		ptr = ft_strsplit(str, ' ');
 		if (ft_strcmp(data->name, ptr[0]) == 0)
 			ft_error("Error Double rooms\n");
+		else if (ptr[0][0] == 'L')
+			ft_error("ERROR\n");
 		while (ptr[i])
 			free(ptr[i++]);
 		free(ptr);

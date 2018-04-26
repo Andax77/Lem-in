@@ -32,6 +32,7 @@ typedef struct	s_link
 
 typedef struct	s_path
 {
+	int				pos;
 	char			*str;
 	struct s_path	*next;
 	struct s_path	*path;
@@ -68,5 +69,23 @@ int				ft_start(t_data *data, char *str, int *stat);
 int				ft_end(t_data *data, char *str, int *stat);
 int				ft_double_rooms(t_data *data, char *str);
 int				ft_path(t_link **link, t_path **path, t_p *p);
+
+/*
+ft_forb
+*/
+int				ft_end_way(t_way *way, t_p *p);
+int				noforb(t_way *way, t_link *link);
+char			*get_name(t_way *way, int nb);
+int				no_issue(t_way *way, t_link *link);
+void			ft_forb(t_way *way);
+
+/*
+ft_addrm_way.c
+*/
+int				ft_size_way(t_way *way);
+int				ft_add_path(t_way *old, t_path **path, t_p *p);
+int				ft_add_path2(t_way *old, t_path **path, t_p *p);
+int				ft_check_passed2(t_way **tmp, t_link *link, t_way *new);
+int				ft_check_passed(t_link *link, t_way **way, t_way *new);
 
 #endif

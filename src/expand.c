@@ -42,6 +42,8 @@ long		ft_atol(char *str)
 
 	nbr = 0;
 	i = 0;
+	if (str[0] == '#' && str[1] != '#')
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))

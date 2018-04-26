@@ -79,7 +79,7 @@ void		ft_forb(t_way *way)
 			tmp = way->forb;
 			while (tmp)
 			{
-			// 	ft_printf("%s->", tmp->str);
+				// ft_printf("%s->", tmp->str);
 				tmp = tmp->forb;
 			}
 			// ft_putchar('\n');

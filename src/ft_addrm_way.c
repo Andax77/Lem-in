@@ -78,7 +78,7 @@ int			ft_check_passed2(t_way **tmp, t_link *link, t_way *new)
 		!((*tmp)->next->str = malloc(sizeof(char) * ft_strlen(link->a) + 1)))
 		ft_error("Malloc error -> ft_check_passed2 -> ft_algo.c\n");
 	(*tmp)->next->str = ft_strcpy((*tmp)->next->str, link->a);
-	ft_printf("Add %s\n",link->a);
+	// ft_printf("Add %s\n",link->a);
 	*tmp = (*tmp)->next;
 	(*tmp)->next = NULL;
 	(*tmp)->forb = NULL;

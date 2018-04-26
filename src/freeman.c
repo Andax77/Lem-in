@@ -91,7 +91,7 @@ void		ft_rm_way(t_link **link, t_way *way)
 	int		i;
 
 	tmp = *link;
-	while (way->next && !(i = 0))
+	while (way->next->next && !(i = 0))
 	{
 		way = way->next;
 		link2 = *link;
