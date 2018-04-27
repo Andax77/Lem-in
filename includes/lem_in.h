@@ -32,7 +32,7 @@ typedef struct	s_link
 
 typedef struct	s_path
 {
-	int				pos;
+	long			pos;
 	char			*str;
 	struct s_path	*next;
 	struct s_path	*path;
@@ -91,6 +91,6 @@ int				ft_check_passed(t_link *link, t_way **way, t_way *new);
 /*
 display.c
 */
-void        	ant_display(t_path *path, long ant);
+void        	ant_display(t_path *path, long ant, long c);
 
 #endif

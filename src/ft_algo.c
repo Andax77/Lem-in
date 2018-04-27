@@ -77,7 +77,6 @@ void		ft_recur(t_link *link, t_way **way, t_p *p, t_way **new)
 
 	ori = link;
 	tmp = *way;
-	// printf("Inifnit\n" );
 	while (link && ft_end_way(*way, p) == 0)
 	{
 		if (ft_check_passed(link, way, tmp))

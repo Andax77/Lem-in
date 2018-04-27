@@ -50,7 +50,7 @@ int			ft_add_path2(t_way *old, t_path **path, t_p *p)
 		ft_error("Malloc error -> ft_add_path2 -> ft_algo.c\n");
 	ft_strcpy(tmp->path->str, p->start);
 	tmp->path->path = NULL;
-	tmp->pos = 0;
+	tmp->path->pos = 0;
 	tmp = tmp->path;
 	while (old && old->next)
 	{
