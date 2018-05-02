@@ -9,11 +9,11 @@ static void ant_display2(t_path *path)
 	while (path)
 	{
 		tmp = path->next;
-		while (tmp->pos != 0)
+		while (tmp)
 		{
-			if (b > 0)
+			if (b > 0 && tmp->pos != 0)
 				ft_printf(" L%ld-%s", tmp->pos, tmp->str);
-			else if (b == 0 && ++b)
+			else if (b == 0 && tmp->pos != 0 && ++b)
 				ft_printf("L%ld-%s", tmp->pos, tmp->str);
 			tmp = tmp->next;
 		}
@@ -33,29 +33,31 @@ void        ant_display(t_path *path, long ant, long c)
 	t_path	*tmp;
 	t_path	*tmp2;
 	long	a;
-	long	b;
+	long	copy;
 
 	c = 0;
 	i = 0;
 	a = ant;
-	while (a > 0)
+	while (a > 0 && a)
 	{
 		tmp = path;
 		while (tmp)
 		{
 			tmp2 = tmp->next;
-			b = tmp->pos;
-			while (tmp2->next->next)
+			copy = tmp2->next->pos;
+			copy = tmp2->pos;
+			tmp2->pos = 0;
+			while (tmp2->next)
 			{
-				tmp2->pos = b;
-				b = tmp2->next->pos;
-				tmp2->next->pos = tmp2->pos;
+				if (!tmp2->next->next && tmp2->next->pos > 0)
+					a--;
+				c = tmp2->next->pos;
+				tmp2->next->pos = copy;
+				copy = c;
 				tmp2 = tmp2->next;
-				if (!tmp2->next->next && tmp->pos > 0)
 			}
 			++i;
-			ant--;
-			if (ant >= 0)
+			if (ant >= 0 && ant--)
 				tmp->next->pos = i;
 			else
 				tmp->next->pos = 0;
