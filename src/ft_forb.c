@@ -58,12 +58,19 @@ int			no_issue(t_way *way, t_link *link)
 		way = way->next;
 	while (link)
 	{
-		if ((ft_strcmp(link->a, way->str) == 0 && ft_strcmp(link->b, link->a)) > 0 ||
-			(ft_strcmp(link->b, way->str) == 0 && ft_strcmp(link->a, link->b)) > 0
-			|| noforb(forb, link))
+		if (ft_strcmp(link->a, way->str) == 0 || noforb(forb, link) ||
+			ft_strcmp(link->b, way->str) == 0)
 			return (0);
 		link = link->next;
 	}
+	// while (link)
+	// {
+	// 	if ((ft_strcmp(link->a, way->str) == 0 && ft_strcmp(link->b, link->a)) > 0 ||
+	// 		(ft_strcmp(link->b, way->str) == 0 && ft_strcmp(link->a, link->b)) > 0
+	// 		|| noforb(forb, link))
+	// 		return (0);
+	// 	link = link->next;
+	// }
 	return (1);
 }
 

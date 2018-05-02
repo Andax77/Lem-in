@@ -18,7 +18,7 @@ int			ft_structcpy(t_way *way, t_way **new)
 
 	ft_freecpy(*new);
 	// printf("NANAAAAN\n");
-	// ft_affichage(way);
+	ft_affichage(way);
 	if (!(tmp = malloc(sizeof(t_way))) ||
 		!(tmp->str = malloc(sizeof(char) * ft_strlen(way->str) + 1)))
 		ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
@@ -29,6 +29,7 @@ int			ft_structcpy(t_way *way, t_way **new)
 		if (!(tmp->next = malloc(sizeof(t_way))) ||
 			!(tmp->next->str = malloc(sizeof(char) * ft_strlen(way->str) + 1)))
 			ft_error("Malloc error -> ft_structcpy -> ft_algo.c\n");
+			// tmp->next->str = ft_strdup(way->next->str);
 		tmp->next->str = ft_strcpy(tmp->next->str, way->next->str);
 		way = way->next;
 		tmp = tmp->next;
@@ -66,6 +67,7 @@ static int	ft_new(t_way **way, t_way **new, t_link *link, t_p *p)
 		tmp->next = NULL;
 		tmp->forb = NULL;
 		// ft_affichage(*way);
+		return (1);
 	}
 	return (0);
 }

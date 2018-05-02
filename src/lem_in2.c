@@ -19,7 +19,7 @@ static void			is_link2(char *str, t_link **new)
 
 	i = 0;
 	a = 0;
-	if (!((*new) = (t_link*)malloc(sizeof(t_link))))
+	if (!((*new) = (t_link*)malloc(sizeof(t_link) + 1)))
 		ft_error("Malloc error to link-> is_link -> lem_in2.c");
 	while (str[i] != '-')
 		i++;
@@ -40,7 +40,18 @@ int					is_link(char *str, t_link **link)
 {
 	t_link			*new;
 	static t_link	*last;
+	char			*tmp;
+	int				i;
+	int				a;
 
+	a = 0;
+	i = 0;
+	tmp = ft_strdup(str);
+	while (tmp[i] && a > 1)
+		if (a > 1)
+			ft_error("ERROR\n");
+		else if (tmp[i++] == '-')
+			a++;
 	is_link2(str, &new);
 	if (last == NULL)
 	{
@@ -52,6 +63,7 @@ int					is_link(char *str, t_link **link)
 		last->next = new;
 		last = new;
 	}
+	free(tmp);
 	return (1);
 }
 

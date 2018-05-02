@@ -116,6 +116,6 @@ void		ft_go(t_data *data, t_link **link, long ant)
 	if (!path)
 		ft_error("ERROR\n");
 	//AFFICHER LE PARSE :)
-	ant_display(path, ant, 0);
+	ant_display(path, ant);
 	ft_clear_path(path);
 }
