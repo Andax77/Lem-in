@@ -36,22 +36,26 @@ static void			is_link2(char *str, t_link **new)
 	(*new)->next = NULL;
 }
 
+void				ft_double_hyphen(char *str)
+{
+	int				a;
+	int				i;
+
+	i = 0;
+	a = 0;
+	while (str[i] && a > 1)
+		if (a > 1)
+			ft_error("ERROR\n");
+		else if (str[i++] == '-')
+			a++;
+}
+
 int					is_link(char *str, t_link **link)
 {
 	t_link			*new;
 	static t_link	*last;
-	char			*tmp;
-	int				i;
-	int				a;
 
-	a = 0;
-	i = 0;
-	tmp = ft_strdup(str);
-	while (tmp[i] && a > 1)
-		if (a > 1)
-			ft_error("ERROR\n");
-		else if (tmp[i++] == '-')
-			a++;
+	ft_double_hyphen(str);
 	is_link2(str, &new);
 	if (last == NULL)
 	{
@@ -63,7 +67,6 @@ int					is_link(char *str, t_link **link)
 		last->next = new;
 		last = new;
 	}
-	free(tmp);
 	return (1);
 }
 
