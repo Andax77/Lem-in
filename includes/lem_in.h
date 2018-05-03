@@ -51,27 +51,50 @@ typedef struct	s_p
 	char			*end;
 }				t_p;
 
+/*
+freeman.c
+*/
 void			ft_clean(t_way *way);
 void			ft_freecpy(t_way *old);
 int				ft_freend(t_way *way);
 void			ft_rm_way(t_link **link, t_way *way);
 
+/*
+lem_in2.c
+*/
 int				is_link(char *str, t_link **link);
 int				is_data(char *str, t_data **data, int *stat);
 
+/*
+expand.c
+*/
 void			ft_data_clear(t_data *data, t_link *link);
 void			ft_affichage(t_way *way);
 long			ft_atol(char *str);
 void			ft_error(char *str);
 
+/*
+ft_go.c
+*/
 void			ft_go(t_data *data, t_link **link, long ant);
+
+/*
+ft_start_end.c
+*/
 int				ft_start(t_data *data, char *str, int *stat);
 int				ft_end(t_data *data, char *str, int *stat);
 int				ft_double_rooms(t_data *data, char *str);
+
+/*
+ft_algo.c
+*/
+int				ft_structcpy(t_way *way, t_way **newest);
+int				ft_new(t_way **way, t_way **newest, t_link *link, t_p *p);
+void			ft_recur_ant(t_link *link, t_way **way, t_p *p, t_way **newest);
 int				ft_path(t_link **link, t_path **path, t_p *p);
 
 /*
-ft_forb
+ft_forb.c
 */
 int				ft_end_way(t_way *way, t_p *p);
 int				noforb(t_way *way, t_link *link);
@@ -80,7 +103,7 @@ int				no_issue(t_way *way, t_link *link);
 void			ft_forb(t_way *way);
 
 /*
-ft_addrm_way.c
+ft_add_rm_way.c
 */
 int				ft_size_way(t_way *way);
 int				ft_add_path(t_way *old, t_path **path, t_p *p);
@@ -91,6 +114,6 @@ int				ft_check_passed(t_link *link, t_way **way, t_way *new);
 /*
 display.c
 */
-void        	ant_display(t_path *path, long ant, long c);
+int				ant_display(t_path *path, long ant);
 
 #endif

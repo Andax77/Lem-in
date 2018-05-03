@@ -36,7 +36,7 @@ static void			is_link2(char *str, t_link **new)
 	(*new)->next = NULL;
 }
 
-void				ft_double_hyphen(char *str)
+static void			ft_double_hyphen(char *str)
 {
 	int				a;
 	int				i;

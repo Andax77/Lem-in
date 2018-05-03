@@ -75,7 +75,7 @@ static char	*ft_get(t_data *data, int stat)
 	return (data->name);
 }
 
-void		ft_clear_path(t_path *path)
+static void	ft_clear_path(t_path *path)
 {
 	t_path	*tmp;
 	t_path	*tmp2;
